@@ -1,0 +1,102 @@
+# Search Task
+
+## 1. DELETE vs TRUNCATE
+
+### DELETE
+
+`DELETE` is used to remove rows from a table.
+
+* It can be used with a `WHERE` clause.
+* It removes rows one by one.
+* It can delete specific rows.
+* It generates transaction log records for the deleted rows.
+* The table structure remains unchanged.
+
+Example:
+
+```sql
+DELETE FROM Employees
+WHERE Salary < 40000;
+```
+
+### TRUNCATE
+
+`TRUNCATE` is used to remove all rows from a table.
+
+* It does not support a `WHERE` clause.
+* It removes all rows from the table.
+* It is generally faster than `DELETE`.
+* It uses fewer transaction log resources than row-by-row deletion.
+* The table structure remains unchanged.
+
+Example:
+
+```sql
+TRUNCATE TABLE Employees;
+```
+
+### Main Difference
+
+| DELETE                        | TRUNCATE                      |
+| ----------------------------- | ----------------------------- |
+| Can delete specific rows      | Removes all rows              |
+| Supports `WHERE`              | Does not support `WHERE`      |
+| Row-level deletion            | Page-level deallocation       |
+| Generally slower              | Generally faster              |
+| Can be used for selected rows | Deletes the entire table data |
+
+---
+
+## 2. Transaction Log Backup
+
+A **Transaction Log Backup** is a backup of the transaction log of a SQL Server database.
+
+It records transactions that have occurred since the previous log backup.
+
+Transaction Log Backups are useful for:
+
+* Recovering the database to a specific point in time.
+* Reducing the risk of losing recent transactions.
+* Maintaining a chain of transaction log backups.
+* Supporting point-in-time recovery.
+
+Transaction Log Backups are available when the database uses an appropriate recovery model, such as the **FULL** recovery model.
+
+Example:
+
+```sql
+BACKUP LOG CompanyDB
+TO DISK = 'C:\Backup\CompanyDB_Log.trn';
+```
+
+---
+
+## 3. What is a Database Job?
+
+A **Database Job** is a scheduled task that automatically performs one or more operations on a database.
+
+In SQL Server, database jobs are commonly created and managed using **SQL Server Agent**.
+
+A job can be scheduled to run:
+
+* Once.
+* Daily.
+* Weekly.
+* Monthly.
+* At a specific time.
+
+Examples of Database Jobs:
+
+* Performing database backups.
+* Running stored procedures.
+* Cleaning old data.
+* Updating database statistics.
+* Performing maintenance tasks.
+
+Example:
+
+A company can create a SQL Server Agent Job that automatically performs a database backup every day at 12:00 AM.
+
+### Conclusion
+
+Database Jobs help automate repetitive database tasks and ensure that important operations are performed according to a predefined schedule.
